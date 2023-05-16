@@ -1,0 +1,93 @@
+<!-- Formulaire pour afficher les produits -->
+<div class="row">
+  <div class="col py-2">
+    <div *ngIf="listProduits != null && !formAjoutProduit && !formUpdateProduit" class="product-list">
+      <nav class="container">
+        <div class="row align-items-center">
+          <div class="col-auto form-group d-flex" style="padding-left:0px;">
+            <button type="button" class="btn btn-primary btn-add-produit" 
+            *ngIf="formAjoutProduit == false && formUpdateProduit == false" (click)="toggleFormAjout()">Ajouter un produit</button>
+          </div>
+        </div>
+      </nav>
+      <br>
+
+      <!-- ███ Formulaire pour chercher les produits par catégorie ███ -->
+      <div class="col align-items-center">
+        <label>Recherche par catégorie : &nbsp;</label>
+        <input type="text" placeholder="Ordinateurs">
+        <button class="btn btn-primary m-1" (click)="rechercheParCategorie()">Rechercher</button>
+        <h5>Nos Produits</h5>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Article</th>
+              <th>Prix</th>
+              <th>Image</th>
+              <th>Edit</th>
+              <th>Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listProduits">
+              <td>{{ item.nom }}</td>
+              <td>
+                <!-- ███ Image de chaque produit ███ -->
+                <img src="../assets/images/placeholder.png" alt="Avatar" class="img-fluid images" />
+              </td>
+              <td>{{ item.prix }}</td>
+              <td>
+                <button class="btn btn-primary" (click)="getProduitToUpdate(item.id)">Edit</button>
+              </td>
+              <td>
+                <button class="btn btn-danger" (click)="deleteProduit(item.id)">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Formulaire pour ajouter un produit -->
+    <div *ngIf="formAjoutProduit">
+      <h5>Ajouter un produit</h5>
+      <form class="my-form">
+        <div class="form-group">
+          <label for="nom">Nom :</label>
+          <input type="text" name="nom" [(ngModel)]="inputProduitNom" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="prix">Prix :</label>
+          <input type="number" name="prix" [(ngModel)]="inputProduitPrix" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="image">Image :</label>
+          <input #produitImageInput type="file" name="image" accept="images/*" class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="categorieId">Catégorie :</label>
+          <input name="categorieNom" [(ngModel)]="inputProduitCategorie" class="form-control" type="text">
+        </div>
+        <button type="submit" class="btn btn-secondary" (click)="backToListProduit()">Annuler</button>
+        <button type="submit" class="btn btn-primary" (click)="createProduits(inputProduitNom, inputProduitPrix, inputProduitCategorie)">Ajouter</button>
+      </form>
+    </div>
+
+    <!-- Formulaire pour Mettre à jour l'image d'un produit -->
+    <div *ngIf="produit != null && formUpdateProduit">
+      <h5>Mettre à jour un produit</h5>
+      <form class="my-form">
+        <div class="form-group">
+          <label for="imageProduit">Nouvelle image :</label>
+          <input #updateProduitImageInput type="file" name="imageProduit" class="form-control" />
+        </div>
+
+        <button type="submit" (click)="backToListProduit()" class="btn btn-secondary">Annuler</button>
+        <button type="submit" (click)="updateProduitImage()" class="btn btn-primary">Mise à jour</button>
+      </form>
+    </div>
+  </div>
+</div>

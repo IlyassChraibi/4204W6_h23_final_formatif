@@ -1,0 +1,18 @@
+<form (ngSubmit)="login(loginDTO)">
+  <h3>Connexion</h3>
+  <table>
+    <tr>
+      <td>Nom d'utilisateur</td>
+      <td>
+        <input type="text" [(ngModel)]="loginDTO.username" name="username" />
+      </td>
+    </tr>
+    <tr>
+      <td>Mot de passe</td>
+      <td>
+        <input type="text" [(ngModel)]="loginDTO.password" name="password" />
+      </td>
+    </tr>
+  </table>
+  <button type="submit">Se connecter</button>
+</form>

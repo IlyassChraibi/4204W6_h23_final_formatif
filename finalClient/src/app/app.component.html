@@ -1,0 +1,45 @@
+<header class="container">
+  <div class="row align-items-center">
+    <div class="col-2 col-md-1">
+      <img
+        routerLink="login"
+        src="../assets/images/discarded_computers_resize.webp"
+        class="img-fluid"
+        alt="Bienvenue Chez MicroScrap"
+      />
+    </div>
+    <div class="col">
+      <h2>Bienvenue Chez MicroScrap Section Administrateur</h2>
+    </div>
+  </div>
+</header>
+
+<nav class="container" *ngIf="!hideNav">
+  <div class="row text-center align-items-center">
+    <div class="col">
+      <a [routerLink]="['/produit']">Produits</a>
+    </div>
+    <div class="col">
+      <a [routerLink]="['/categorie']">Categories</a>
+    </div>
+    <div class="col">
+      <a [routerLink]="['/login']">Connexion</a>
+    </div>
+    <div class="col">
+      <a [routerLink]="['/register']">Inscription</a>
+    </div>
+    <div class="col" (click)="logout()">
+      <a>Déconnexion</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="container">
+  <div class="row text-center">
+    <div class="col py-1">&copy; Tous droits réservés à personne</div>
+  </div>
+</footer>

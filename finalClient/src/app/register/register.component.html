@@ -1,0 +1,22 @@
+<form (ngSubmit)="httpService.register(registerDTO)">
+  <h3>Inscription</h3>
+  <table>
+    <tr>
+      <td>Nom d'utilisateur</td>
+      <td><input type="text" [(ngModel)]="registerDTO.username" name="username"></td>
+    </tr>
+    <tr>
+      <td>Adresse courriel</td>
+      <td><input type="text" [(ngModel)]="registerDTO.email" name="email"></td>
+    </tr>
+    <tr>
+      <td>Mot de passe</td>
+      <td><input type="text" [(ngModel)]="registerDTO.password" name="password"></td>
+    </tr>
+    <tr>
+      <td>Confirmer le mot de passe</td>
+      <td><input type="text" [(ngModel)]="registerDTO.passwordConfirm" name="passwordConfirm"></td>
+    </tr>
+  </table>
+  <button type="submit">S'inscrire</button>
+</form>

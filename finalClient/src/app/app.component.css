@@ -1,0 +1,123 @@
+/* Définir les styles de base pour la page */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #333333;
+  background-color: #f5f5f5;
+}
+
+/* Styler l'en-tête du site */
+header {
+  background-color: #0072c6;
+  color: #ffffff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/* Styler la navigation */
+nav {
+  background-color: #e7e7e7;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+nav a {
+  display: block;
+  padding: 5px 10px;
+  color: #333333;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #0072c6;
+  color: #ffffff;
+}
+
+/* Styler le contenu principal */
+main {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Styler les sections de la page */
+section {
+  margin-bottom: 20px;
+}
+
+section h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+/* Styler les produits */
+.product {
+  background-color: #ffffff;
+  border: 1px solid #e7e7e7;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.product h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.product p {
+  margin: 0;
+}
+
+.product img {
+  max-width: 100%;
+}
+
+/* Styler le pied de page */
+footer {
+  background-color: #0072c6;
+  color: #ffffff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  border: 2px solid #0072c6;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #0072c6;
+}
+
+a{
+  cursor: pointer;
+}
