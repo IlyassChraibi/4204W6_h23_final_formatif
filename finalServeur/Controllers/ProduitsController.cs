@@ -35,19 +35,47 @@ namespace finalServeur.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "vendor")]
         public async Task<ActionResult<Produit>> PostProduit(ProduitDTO produitDTO)
         {
             // ███ Ajouter du code ici ███
+            // Vérifier si la catégorie existe déjà dans la base de données
+            var categorie = await _context.Categorie.FirstOrDefaultAsync(c => c.Nom == produitDTO.NomCategorie);
 
-            Produit produit = new Produit() { }; // À compléter ...
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User? user = await _context.Users.FindAsync(userId);
+
+
+            // Si la catégorie n'existe pas, la créer et l'ajouter à la base de données
+            if (categorie == null)
+            {
+                categorie = new Categorie { Nom = produitDTO.NomCategorie };
+                _context.Categorie.Add(categorie);
+                await _context.SaveChangesAsync();
+            }
+
+            // Créer un nouveau produit avec les données fournies
+            Produit produit = new Produit
+            {
+                Nom = produitDTO.Nom,
+                Prix = produitDTO.Prix,
+                Categorie = categorie,
+               // Vendor = await _userManager.GetUserAsync(User) // Lier l'utilisateur fournisseur actuel
+            };
+            produit.Vendor = user;
 
             // ███ Ajouter du code ici ███
+            // Ajouter le produit à la base de données
+            _context.Produit.Add(produit);
+            await _context.SaveChangesAsync();
 
             // On retourne le nouveau produit pour terminer (Conservez cette ligne de code)
             return Ok(produit);
         }
 
+
         [HttpPost("{id}")]
+        [Authorize(Roles = "vendor")]
         public async Task<ActionResult<Produit>> PostImageProduit(int id)
         {
             Produit? produit = await _context.Produit.FindAsync(id);
@@ -89,6 +117,7 @@ namespace finalServeur.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "vendor")]
         public async Task<IActionResult> DeleteProduit(int id)
         {
             Produit? produit = null; // ███ À modifier ███
