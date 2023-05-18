@@ -125,18 +125,52 @@ namespace finalServeur.Controllers
             }
         }
 
+
         [HttpDelete("{id}")]
         [Authorize(Roles = "vendor")]
         public async Task<IActionResult> DeleteProduit(int id)
         {
-            Produit? produit = null; // ███ À modifier ███
+            Produit? produit = await _context.Produit
+                .Include(p => p.Categorie)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
-            // ███ Beaucoup de code à ajouter ici ███
+            if (produit == null)
+            {
+                return NotFound(new { Message = "Produit non trouvé." });
+            }
 
+            // Vérifier si l'utilisateur authentifié est le fournisseur (vendor) du produit
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (produit.Vendor.Id != userId)
+            {
+                return Forbid(); // L'utilisateur n'est pas autorisé à supprimer ce produit
+            }
+
+            // Supprimer l'image du disque si elle existe
+           if (!string.IsNullOrEmpty(produit.FileName))
+            {
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Images", produit.FileName);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+            }
+
+            // Supprimer le produit de la base de données
             _context.Produit.Remove(produit);
+
+            // Vérifier si la catégorie du produit n'est associée à aucun autre produit
+            if (produit.Categorie != null && !_context.Produit.Any(p => p.Categorie.Id == produit.Categorie.Id))
+            {
+                _context.Categorie.Remove(produit.Categorie); // Supprimer la catégorie de la base de données
+            }
+
             await _context.SaveChangesAsync();
+
             return Ok(new { Message = "Produit supprimé." });
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetImage(int id)
