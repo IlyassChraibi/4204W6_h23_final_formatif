@@ -25,8 +25,8 @@
           <thead>
             <tr>
               <th>Article</th>
-              <th>Prix</th>
               <th>Image</th>
+              <th>Prix</th>
               <th>Edit</th>
               <th>Supprimer</th>
             </tr>
@@ -36,7 +36,7 @@
               <td>{{ item.nom }}</td>
               <td>
                 <!-- ███ Image de chaque produit ███ -->
-                <img src="../assets/images/placeholder.png" alt="Avatar" class="img-fluid images" />
+                <img [src]="'https://localhost:5001/api/Produits/GetImage/'+ item.id" alt="Avatar" class="img-fluid images" />
               </td>
               <td>{{ item.prix }}</td>
               <td>

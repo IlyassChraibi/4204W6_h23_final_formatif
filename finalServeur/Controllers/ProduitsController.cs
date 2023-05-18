@@ -38,13 +38,11 @@ namespace finalServeur.Controllers
         [Authorize(Roles = "vendor")]
         public async Task<ActionResult<Produit>> PostProduit(ProduitDTO produitDTO)
         {
-            // ███ Ajouter du code ici ███
             // Vérifier si la catégorie existe déjà dans la base de données
             var categorie = await _context.Categorie.FirstOrDefaultAsync(c => c.Nom == produitDTO.NomCategorie);
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             User? user = await _context.Users.FindAsync(userId);
-
 
             // Si la catégorie n'existe pas, la créer et l'ajouter à la base de données
             if (categorie == null)
@@ -60,18 +58,17 @@ namespace finalServeur.Controllers
                 Nom = produitDTO.Nom,
                 Prix = produitDTO.Prix,
                 Categorie = categorie,
-               // Vendor = await _userManager.GetUserAsync(User) // Lier l'utilisateur fournisseur actuel
+                Vendor = user // Lier l'utilisateur fournisseur actuel
             };
-            produit.Vendor = user;
 
-            // ███ Ajouter du code ici ███
             // Ajouter le produit à la base de données
             _context.Produit.Add(produit);
             await _context.SaveChangesAsync();
 
-            // On retourne le nouveau produit pour terminer (Conservez cette ligne de code)
+            // Retourner le nouveau produit pour terminer
             return Ok(produit);
         }
+
 
 
         [HttpPost("{id}")]
