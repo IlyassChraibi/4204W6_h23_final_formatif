@@ -15,7 +15,7 @@
       <!-- ███ Formulaire pour chercher les produits par catégorie ███ -->
       <div class="col align-items-center">
         <label>Recherche par catégorie : &nbsp;</label>
-        <input type="text" placeholder="Ordinateurs">
+        <input type="text" [(ngModel)]="inputProduitCategorie" placeholder="Ordinateurs">
         <button class="btn btn-primary m-1" (click)="rechercheParCategorie()">Rechercher</button>
         <h5>Nos Produits</h5>
       </div>

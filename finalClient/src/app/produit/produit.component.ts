@@ -44,9 +44,12 @@ export class ProduitComponent implements OnInit {
     this.backToListProduit();
   }
 
-  async rechercheParCategorie(){
-    // ███ À compléter ███
+  async rechercheParCategorie() {
+    this.listProduits = await this.ProduitService.rechercheProduit(this.inputProduitCategorie);
   }
+
+  
+  
 
   async deleteProduit(id: number) {
     await this.ProduitService.deleteProduit(id);

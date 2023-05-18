@@ -9,7 +9,14 @@ import { Produit } from 'src/app/models/produit';
 export class ProduitService {
   constructor(public http: HttpClient) {}
 
-  // ███ Ajoutez une requête pour obtenir les produits d'une catégorie ! ███
+ async rechercheProduit(categorie: string): Promise<Produit[]> {
+  let response = await lastValueFrom(
+    this.http.get<Produit[]>("https://localhost:5001/api/Produits/GetProduitsByCategorie/"+ categorie)
+  );
+  console.log(response);
+  return response;
+}
+
 
   // Obtenir tous les produits
   async getProduits(): Promise<Produit[]> {

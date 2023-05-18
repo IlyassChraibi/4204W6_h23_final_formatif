@@ -27,6 +27,18 @@ namespace finalServeur.Controllers
             _context = contextBD;
         }
 
+        [HttpGet("{categorie}")]
+        public async Task<ActionResult<IEnumerable<Produit>>> GetProduitsByCategorie(string categorie)
+        {
+            var produits = await _context.Produit
+                .Include(p => p.Categorie)
+                .Where(p => p.Categorie.Nom.ToLower() == categorie.ToLower())
+                .ToListAsync();
+
+            return Ok(produits);
+        }
+
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Produit>>> GetProduit()
         {
